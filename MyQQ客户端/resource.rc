@@ -1,0 +1,332 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MAIN DIALOG DISCARDABLE  0, 0, 145, 245
+STYLE DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "MyQQ客户端"
+FONT 10, "System"
+BEGIN
+    PUSHBUTTON      "",IDC_OK,5,217,20,18
+    LTEXT           "Static",IDC_USERNAME,36,4,46,8
+    COMBOBOX        IDC_COMBUSTA,104,17,30,30,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    ICON            "",IDC_STATIC_ICON,9,5,20,20,SS_NOTIFY | 
+                    SS_REALSIZEIMAGE | WS_BORDER
+    LTEXT           "Static",IDC_USERID,36,16,52,8
+    CONTROL         "Tab1",IDC_TAB1,"SysTabControl32",0x0,0,35,145,177
+    ICON            IDI_ICON_MSG2,IDC_HAVEMSG,120,216,20,20,SS_NOTIFY
+    PUSHBUTTON      "",IDC_BUTTON1,27,217,20,18
+    ICON            IDI_ICON2,IDC_SET,53,219,16,16,SS_NOTIFY
+END
+
+IDD_LOGIINDIALOG DIALOG DISCARDABLE  0, 0, 142, 167
+STYLE DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "MyQQ登录"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "登录",IDOK,98,61,35,12
+    LTEXT           "密码:",IDC_STATIC,19,31,19,8
+    LTEXT           "用户名:",IDC_STATIC,13,14,27,8
+    EDITTEXT        IDC_EDIT_ID,45,11,76,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_EDIT_PASSWD,45,28,75,14,ES_PASSWORD | ES_AUTOHSCROLL
+    CTEXT           "static",IDC_LOGSTA,4,77,127,8
+    PUSHBUTTON      "设置",IDC_BUTTON_SET,8,62,32,10
+    GROUPBOX        "服务器信息",IDC_STATIC,1,96,139,69
+    CONTROL         "IPAddress1",IDC_IPADDRESS,"SysIPAddress32",WS_TABSTOP,
+                    22,122,97,13
+    COMBOBOX        IDC_COMBO1,45,46,30,30,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "记住密码",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,80,47,48,10
+    LTEXT           "IP地址:",IDC_STATIC,11,109,26,8
+    LTEXT           "端口:",IDC_STATIC,13,145,19,8
+    EDITTEXT        IDC_EDIT_PORT,38,143,40,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "注册",IDC_BUTTON_REGISTER,44,62,28,10
+END
+
+IDD_CHATDIALOG DIALOG DISCARDABLE  0, 0, 252, 191
+STYLE DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "聊天"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "发送",IDOK,187,140,50,14
+    PUSHBUTTON      "关闭",IDCANCEL,187,160,50,14
+    EDITTEXT        IDC_EDITRECV,13,34,226,81,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    WS_VSCROLL
+    PUSHBUTTON      "字体",IDC_BUTTON1,19,122,23,14
+    PUSHBUTTON      "图片",IDC_BUTTON2,45,122,23,14
+    PUSHBUTTON      "语音",IDC_BUTTON3,71,122,23,14
+    EDITTEXT        IDC_EDITSEND,13,142,169,33,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    WS_VSCROLL
+    LTEXT           "1",IDC_UNAME,19,16,49,8
+    LTEXT           "S",IDC_UID,88,16,41,8
+    GROUPBOX        "好友信息",IDC_STATIC,12,4,142,27
+    PUSHBUTTON      "抖动",IDC_BUTTON_SHAKE,98,122,20,14
+END
+
+IDD_FINDDIALOG DIALOG DISCARDABLE  0, 0, 187, 150
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "查找好友"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "查找",IDOK,122,18,50,14
+    PUSHBUTTON      "加为好友",IDCANCEL,123,40,50,14
+    LISTBOX         IDC_LIST1,14,74,160,59,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT1,24,35,79,14,ES_AUTOHSCROLL
+    CONTROL         "按用户名",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON,16,17,
+                    48,10
+    GROUPBOX        "查找规则",IDC_STATIC,7,7,114,50
+    CONTROL         "ID精确查找",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,68,
+                    17,49,10
+    GROUPBOX        "查找结果",IDC_STATIC,7,62,173,76
+END
+
+IDD_DIALOG_REGISTER DIALOG DISCARDABLE  0, 0, 231, 196
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "MyQQ注册"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "注册",IDOK,84,168,50,14
+    GROUPBOX        "必填信息",IDC_STATIC,13,16,204,148
+    LTEXT           "ID号:",IDC_STATIC,66,33,18,8
+    LTEXT           "用户名:",IDC_STATIC,57,48,27,8
+    LTEXT           "确认密码:",IDC_STATIC,48,79,35,8
+    LTEXT           "密码:",IDC_STATIC,65,65,19,8
+    LTEXT           "密保问题:",IDC_STATIC,48,96,35,8
+    LTEXT           "答案:",IDC_STATIC,63,113,19,8
+    EDITTEXT        IDC_EDIT_ID,87,32,62,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_EDIT_NAME,87,48,62,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PASSWD2,87,78,62,12,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PASSWD1,87,64,62,12,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_ANSWER,87,111,64,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_QUESTEN,87,94,96,30,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "检验",IDC_BT_CHEEKUP,156,34,33,11
+    LTEXT           "验证码:",IDC_STATIC,55,130,27,8
+    EDITTEXT        IDC_EDIT_NUM,87,128,40,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Static",IDC_STATIC_NUM,134,131,19,8
+    CTEXT           "请填写信息",IDC_STATIC_ERROR,34,148,161,8
+END
+
+IDD_FRTREE DIALOG DISCARDABLE  0, 0, 143, 192
+STYLE WS_CHILD
+FONT 10, "System"
+BEGIN
+    CONTROL         "Tree1",IDC_FRTREE,"SysTreeView32",WS_BORDER | 
+                    WS_TABSTOP,0,0,143,192
+END
+
+IDD_ACTIVEFR DIALOG DISCARDABLE  0, 0, 150, 190
+STYLE WS_CHILD
+FONT 10, "System"
+BEGIN
+    LTEXT           "该功能还未完善,敬请期待",IDC_STATIC,31,89,91,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_MAIN, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 242
+    END
+
+    IDD_LOGIINDIALOG, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 165
+    END
+
+    IDD_CHATDIALOG, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 190
+    END
+
+    IDD_FINDDIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 143
+    END
+
+    IDD_DIALOG_REGISTER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 224
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 189
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 24
+//
+
+1 24 DISCARDABLE 
+BEGIN
+    0x3f3c, 0x6d78, 0x206c, 0x6576, 0x7372, 0x6f69, 0x3d6e, 0x3122, 0x302e, 
+    0x2022, 0x6e65, 0x6f63, 0x6964, 0x676e, 0x223d, 0x5455, 0x2d46, 0x2238, 
+    0x7320, 0x6174, 0x646e, 0x6c61, 0x6e6f, 0x3d65, 0x7922, 0x7365, 0x3f22, 
+    0x203e, 0x0a0d, 0x613c, 0x7373, 0x6d65, 0x6c62, 0x2079, 0x0a0d, 0x6d78, 
+    0x6e6c, 0x3d73, 0x7522, 0x6e72, 0x733a, 0x6863, 0x6d65, 0x7361, 0x6d2d, 
+    0x6369, 0x6f72, 0x6f73, 0x7466, 0x632d, 0x6d6f, 0x613a, 0x6d73, 0x762e, 
+    0x2231, 0x0d20, 0x6d0a, 0x6e61, 0x6669, 0x7365, 0x5674, 0x7265, 0x6973, 
+    0x6e6f, 0x223d, 0x2e31, 0x2230, 0x0d3e, 0x3c0a, 0x7361, 0x6573, 0x626d, 
+    0x796c, 0x6449, 0x6e65, 0x6974, 0x7974, 0x0d20, 0x700a, 0x6f72, 0x6563, 
+    0x7373, 0x726f, 0x7241, 0x6863, 0x7469, 0x6365, 0x7574, 0x6572, 0x223d, 
+    0x3878, 0x2236, 0x0d20, 0x760a, 0x7265, 0x6973, 0x6e6f, 0x223d, 0x2e35, 
+    0x2e31, 0x2e30, 0x2230, 0x0a0d, 0x7974, 0x6570, 0x223d, 0x6977, 0x336e, 
+    0x2232, 0x0a0d, 0x616e, 0x656d, 0x223d, 0x6574, 0x7473, 0x652e, 0x6578, 
+    0x2f22, 0x0d3e, 0x3c0a, 0x6564, 0x6373, 0x6972, 0x7470, 0x6f69, 0x3e6e, 
+    0x6554, 0x7473, 0x4120, 0x7070, 0x696c, 0x6163, 0x6974, 0x6e6f, 0x2f3c, 
+    0x6564, 0x6373, 0x6972, 0x7470, 0x6f69, 0x3e6e, 0x0a0d, 0x643c, 0x7065, 
+    0x6e65, 0x6564, 0x636e, 0x3e79, 0x0a0d, 0x643c, 0x7065, 0x6e65, 0x6564, 
+    0x746e, 0x7341, 0x6573, 0x626d, 0x796c, 0x0d3e, 0x3c0a, 0x7361, 0x6573, 
+    0x626d, 0x796c, 0x6449, 0x6e65, 0x6974, 0x7974, 0x0a0d, 0x7974, 0x6570, 
+    0x223d, 0x6977, 0x336e, 0x2232, 0x0a0d, 0x616e, 0x656d, 0x223d, 0x694d, 
+    0x7263, 0x736f, 0x666f, 0x2e74, 0x6957, 0x646e, 0x776f, 0x2e73, 0x6f43, 
+    0x6d6d, 0x6e6f, 0x432d, 0x6e6f, 0x7274, 0x6c6f, 0x2273, 0x0a0d, 0x6576, 
+    0x7372, 0x6f69, 0x3d6e, 0x3622, 0x302e, 0x302e, 0x302e, 0x0d22, 0x700a, 
+    0x6275, 0x696c, 0x4b63, 0x7965, 0x6f54, 0x656b, 0x3d6e, 0x3622, 0x3935, 
+    0x6235, 0x3436, 0x3431, 0x6334, 0x6663, 0x6431, 0x2266, 0x0a0d, 0x616c, 
+    0x676e, 0x6175, 0x6567, 0x223d, 0x222a, 0x0a0d, 0x7270, 0x636f, 0x7365, 
+    0x6f73, 0x4172, 0x6372, 0x6968, 0x6574, 0x7463, 0x7275, 0x3d65, 0x7822, 
+    0x3638, 0x2f22, 0x0d3e, 0x3c0a, 0x642f, 0x7065, 0x6e65, 0x6564, 0x746e, 
+    0x7341, 0x6573, 0x626d, 0x796c, 0x0d3e, 0x3c0a, 0x642f, 0x7065, 0x6e65, 
+    0x6564, 0x636e, 0x3e79, 0x0a0d, 0x2f3c, 0x7361, 0x6573, 0x626d, 0x796c, 
+    "\076" 
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_MAIN DLGINIT
+BEGIN
+    IDC_COMBUSTA, 0x403, 5, 0
+0xdad4, 0xdfcf, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+1                       ICON    DISCARDABLE     "1.ico"
+IDI_ICON1               ICON    DISCARDABLE     "Search.ico"
+IDI_ICON2               ICON    DISCARDABLE     "33310.ico"
+IDI_ICON3               ICON    DISCARDABLE     "qq.ico"
+IDI_ICON_DEFINE         ICON    DISCARDABLE     "0.ico"
+IDI_ICON_MSG1           ICON    DISCARDABLE     "msnmchat.ico"
+IDI_ICON_MSG2           ICON    DISCARDABLE     "messenger.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU_MIN MENU DISCARDABLE 
+BEGIN
+    POPUP "菜单"
+    BEGIN
+        MENUITEM "显示主窗体",                  ID_MENU_DISP
+        MENUITEM "退出",                        ID_MENU_EXIT
+    END
+END
+
+IDR_MENU_FRIENDLIST MENU DISCARDABLE 
+BEGIN
+    POPUP "菜单"
+    BEGIN
+        MENUITEM "发送消息",                    ID_MENU_SENDMSG
+        MENUITEM "查看信息",                    ID_MENU_LOOKMSG
+    END
+END
+
+#endif    // Chinese (中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
