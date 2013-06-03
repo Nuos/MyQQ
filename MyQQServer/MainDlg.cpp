@@ -15,16 +15,16 @@ using namespace std;
 
 
 
-//±¾ÎÄ¼şÄÚµÄÈ«¾Ö±äÁ¿
+//æœ¬æ–‡ä»¶å†…çš„å…¨å±€å˜é‡
 
-MySql mysql("root","root","myqq","MySQL ODBC 5.1 Driver","127.0.0.1");  //Êı¾İ¿âÀà
-SOCKET serverSocket;             //·şÎñ¶ËÌ×½Ó×Ö
-map <SOCKET,int >Map1;           //map1 ±£´æsocketÓëuid
-map <int , UserInfor>Map2;       //map2 ±£´æuidÓëÓÃ»§ĞÅÏ¢
-bool ServerStart = false;        //¼ÇÂ¼·şÎñÆ÷µÄ×´Ì¬
-int UserCount = 0;               //¼ÇÂ¼µÇÂ¼ÓÃ»§¸öÊı
+MySql mysql("root","root","myqq","MySQL ODBC 5.1 Driver","127.0.0.1");  //æ•°æ®åº“ç±»
+SOCKET serverSocket;             //æœåŠ¡ç«¯å¥—æ¥å­—
+map <SOCKET,int >Map1;           //map1 ä¿å­˜socketä¸uid
+map <int , UserInfor>Map2;       //map2 ä¿å­˜uidä¸ç”¨æˆ·ä¿¡æ¯
+bool ServerStart = false;        //è®°å½•æœåŠ¡å™¨çš„çŠ¶æ€
+int UserCount = 0;               //è®°å½•ç™»å½•ç”¨æˆ·ä¸ªæ•°
 const int CacheMaxNum = 200;
-//Cache LocalCache[CacheMaxNum];           //±¾µØcache±£´æÓÃ»§µÄĞÅÏ¢,µÇÂ¼Ê±Ê¹ÓÃ(¼õÉÙ·ÃÎÊÊı¾İ¿â´ÎÊı)
+//Cache LocalCache[CacheMaxNum];           //æœ¬åœ°cacheä¿å­˜ç”¨æˆ·çš„ä¿¡æ¯,ç™»å½•æ—¶ä½¿ç”¨(å‡å°‘è®¿é—®æ•°æ®åº“æ¬¡æ•°)
 map <int ,Cache>LocalCache;
 
 
@@ -41,7 +41,7 @@ BOOL WINAPI Main_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         HANDLE_MSG(hWnd, WM_INITDIALOG, Main_OnInitDialog);
         HANDLE_MSG(hWnd, WM_COMMAND, Main_OnCommand);
 		HANDLE_MSG(hWnd,WM_CLOSE, Main_OnClose);
-		case SERVER_MESSAGE:	//·şÎñÏûÏ¢(ÇëÇóÁ¬½Ó,½ÓÊÕÏûÏ¢,¶Ï¿ªÁ¬½Ó)	
+		case SERVER_MESSAGE:	//æœåŠ¡æ¶ˆæ¯(è¯·æ±‚è¿æ¥,æ¥æ”¶æ¶ˆæ¯,æ–­å¼€è¿æ¥)	
 			ServerMesssageCome(hWnd,wParam,lParam);
 		break;
     }
@@ -64,7 +64,7 @@ void Main_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 {
     switch(id)
     {
-        case IDC_OK:                 //Æô¶¯·şÎñÆ÷
+        case IDC_OK:                 //å¯åŠ¨æœåŠ¡å™¨
 			{
 				if ( !ServerStart )
 				{
@@ -79,7 +79,7 @@ void Main_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 				}
 			}
 			break;
-		case IDC_BUTTON_LOG:         //²é¿´ÈÕÖ¾ÎÄ¼ş
+		case IDC_BUTTON_LOG:         //æŸ¥çœ‹æ—¥å¿—æ–‡ä»¶
 			{
 				SeeLogMsg(hwnd);
 			}
@@ -95,24 +95,24 @@ void ServerMesssageCome(HWND hwnd,WPARAM wParam,LPARAM lParam)
 {
 	switch(WSAGETSELECTEVENT(lParam))
 	{
-		case FD_ACCEPT:       //ÇëÇóÁ¬½ÓĞÅÏ¢
+		case FD_ACCEPT:       //è¯·æ±‚è¿æ¥ä¿¡æ¯
 			{
 				AcceptMessage( hwnd,(SOCKET)wParam,serverSocket);
 			}
 			break;
 
-		case FD_READ:        //½ÓÊÕÏûÏ¢²¢×÷³öÏìÓ¦´¦Àí
+		case FD_READ:        //æ¥æ”¶æ¶ˆæ¯å¹¶ä½œå‡ºå“åº”å¤„ç†
 			{
 				ReadMessage(hwnd,(SOCKET)wParam,mysql,Map1,Map2 , LocalCache );
 			}
 			break;
 			
-		case FD_WRITE:       //socketÎª¿ÉĞ´
+		case FD_WRITE:       //socketä¸ºå¯å†™
 			{
 			}
 			break;
 
-		case FD_CLOSE:       //socket¹Ø±ÕÁ¬½Ó--É¾³ıÏìÓ¦µÄĞÅÏ¢
+		case FD_CLOSE:       //socketå…³é—­è¿æ¥--åˆ é™¤å“åº”çš„ä¿¡æ¯
 			{
 				CloseMessage( hwnd,(SOCKET)wParam );
 			}
@@ -124,45 +124,45 @@ void ServerMesssageCome(HWND hwnd,WPARAM wParam,LPARAM lParam)
 void Main_OnClose(HWND hwnd)
 {
 	closesocket(serverSocket);
-	SetServerLog(hwnd,IDC_EDIT1,"·şÎñÒÑÍ£Ö¹");
+	SetServerLog(hwnd,IDC_EDIT1,"æœåŠ¡å·²åœæ­¢");
     EndDialog(hwnd, 0);
 }
 
 
 
-//Æô¶¯·şÎñÆ÷
+//å¯åŠ¨æœåŠ¡å™¨
 void StartServer(HWND hwnd)
 {
 	SetCache(LocalCache,CacheMaxNum);
 	ServerStart = true;
-	SetDlgItemText(hwnd,IDC_OK,"Í£Ö¹");
-	SetDlgItemText(hwnd,IDC_SERVER_STATIC,"·şÎñÆ÷ÒÑÆô¶¯");
+	SetDlgItemText(hwnd,IDC_OK,"åœæ­¢");
+	SetDlgItemText(hwnd,IDC_SERVER_STATIC,"æœåŠ¡å™¨å·²å¯åŠ¨");
 	SYSTEMTIME Time;
 	memset(&Time,0,sizeof(Time));
 	GetSystemTime(&Time);
 	char TimeStr[255];
-	sprintf(TimeStr," ÈÕÆÚ: %d/%d\r\n Ê±¼ä: %d:%d",
+	sprintf(TimeStr," æ—¥æœŸ: %d/%d\r\n æ—¶é—´: %d:%d",
 		Time.wMonth,Time.wDay,Time.wHour+8,Time.wMinute);
 	SetDlgItemText(hwnd,IDC_LINKTIME,TimeStr);	
 }
 
 
 
-//Í£Ö¹·şÎñÆ÷
+//åœæ­¢æœåŠ¡å™¨
 void StopServer(HWND hwnd)
 {
 	closesocket(serverSocket);
 	ServerStart = false;
-	SetDlgItemText(hwnd,IDC_OK,"Æô¶¯");
-	SetDlgItemText(hwnd,IDC_SERVER_STATIC,"·şÎñÆ÷ÒÑÍ£Ö¹");
-	SetServerLog(hwnd,IDC_EDIT1,"·şÎñÆ÷ÒÑÍ£Ö¹");
+	SetDlgItemText(hwnd,IDC_OK,"å¯åŠ¨");
+	SetDlgItemText(hwnd,IDC_SERVER_STATIC,"æœåŠ¡å™¨å·²åœæ­¢");
+	SetServerLog(hwnd,IDC_EDIT1,"æœåŠ¡å™¨å·²åœæ­¢");
 	SetDlgItemText(hwnd,IDC_LINKTIME,"");	
 }
 
 
 
 
-//²é¿´ÈÕÖ¾ÎÄ¼ş
+//æŸ¥çœ‹æ—¥å¿—æ–‡ä»¶
 void SeeLogMsg(HWND hwnd)
 {
 	long ChangeSize = 0;
@@ -184,15 +184,15 @@ void SeeLogMsg(HWND hwnd)
 
 
 
-//¸ù¾İ¸øÈëµÄÖµ¸Ä±ä´°¿Ú´óĞ¡
+//æ ¹æ®ç»™å…¥çš„å€¼æ”¹å˜çª—å£å¤§å°
 bool SetWindowSize( HWND hwnd,long xPos_Change,long yPos_Change)
 {
 	RECT rect;
-	//struct rect ËµÃ÷ĞÅÏ¢
-	//rect.left  ×óÉÏ½Çx
-	//rect.top   ×óÉÏ½Çy
-	//rect.right ÓÒÏÂ½Çx
-	//rect.bottomÓÒÏÂ½Çy
+	//struct rect è¯´æ˜ä¿¡æ¯
+	//rect.left  å·¦ä¸Šè§’x
+	//rect.top   å·¦ä¸Šè§’y
+	//rect.right å³ä¸‹è§’x
+	//rect.bottomå³ä¸‹è§’y
 
 	memset(&rect,0,sizeof(rect));
 	if ( GetWindowRect(hwnd,&rect) )
@@ -207,53 +207,53 @@ bool SetWindowSize( HWND hwnd,long xPos_Change,long yPos_Change)
 	}
 	else
 	{
-		MessageBox(hwnd,TEXT("¶Ô²»Æğ»ñÈ¡ĞÅÏ¢Ê§°Ü!"),TEXT("´íÎó"),MB_OK|MB_ICONERROR);
+		MessageBox(hwnd,TEXT("å¯¹ä¸èµ·è·å–ä¿¡æ¯å¤±è´¥!"),TEXT("é”™è¯¯"),MB_OK|MB_ICONERROR);
 		return false;
 	}
 	return true;
 }
 
 
-//´´½¨Ì××Ö½Ú²¢½øÈëÕìÌı×´Ì¬
+//åˆ›å»ºå¥—å­—èŠ‚å¹¶è¿›å…¥ä¾¦å¬çŠ¶æ€
 
 bool  Listen(HWND hwnd)
 {	
-	short port=8000; //ÉèÖÃ¶Ë¿Ú
+	short port=8000; //è®¾ç½®ç«¯å£
 	
 	WSADATA wsa; 
-	//³õÊ¼»¯Ì×½Ó×ÖDLL 
+	//åˆå§‹åŒ–å¥—æ¥å­—DLL 
 	if(WSAStartup(MAKEWORD(2,2),&wsa)!=0)
 	{ 
-		SetServerLog(hwnd,IDC_EDIT1,"Ì×½Ó×Ö³õÊ¼»¯Ê§°Ü");
+		SetServerLog(hwnd,IDC_EDIT1,"å¥—æ¥å­—åˆå§‹åŒ–å¤±è´¥");
 		return false; 
 	} 
-	//´´½¨Ì×½Ó×Ö 
+	//åˆ›å»ºå¥—æ¥å­— 
 	
 	if((serverSocket=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP))==INVALID_SOCKET)
 	{ 
-		SetServerLog(hwnd,IDC_EDIT1,"Ì×½Ó×Ö´´½¨Ê§°Ü");
+		SetServerLog(hwnd,IDC_EDIT1,"å¥—æ¥å­—åˆ›å»ºå¤±è´¥");
 		return false; 
 	} 
-	//´´½¨ÊÂ¼ş
+	//åˆ›å»ºäº‹ä»¶
 	WSAAsyncSelect(serverSocket,hwnd,SERVER_MESSAGE, FD_ACCEPT|FD_READ|FD_WRITE|FD_CLOSE);
 	struct sockaddr_in serverAddress; 
 	memset(&serverAddress,0,sizeof(sockaddr_in)); 
 	serverAddress.sin_family=AF_INET; 
 	serverAddress.sin_addr.S_un.S_addr = htonl(INADDR_ANY); 
 	serverAddress.sin_port = htons(port); 
-	//°ó¶¨ 
+	//ç»‘å®š 
 	if(bind(serverSocket,(sockaddr*)&serverAddress,sizeof(serverAddress))==SOCKET_ERROR)
 	{ 
-		SetServerLog(hwnd,IDC_EDIT1,"Ì×½Ó×Ö°ó¶¨µ½¶Ë¿ÚÊ§°Ü£¡");
+		SetServerLog(hwnd,IDC_EDIT1,"å¥—æ¥å­—ç»‘å®šåˆ°ç«¯å£å¤±è´¥ï¼");
 		return false; 
 	} 
-	//½øÈëÕìÌı×´Ì¬ 
+	//è¿›å…¥ä¾¦å¬çŠ¶æ€ 
 	if(listen(serverSocket,SOMAXCONN)==SOCKET_ERROR)
 	{ 
-		SetServerLog(hwnd,IDC_EDIT1,"ÕìÌıÊ§°Ü£¡");
+		SetServerLog(hwnd,IDC_EDIT1,"ä¾¦å¬å¤±è´¥ï¼");
 		return false; 
 	} 
-	SetServerLog(hwnd,IDC_EDIT1,"·şÎñÆ÷¶Ë¿ÚÕıÔÚ¼àÌıÁ¬½Ó......");
+	SetServerLog(hwnd,IDC_EDIT1,"æœåŠ¡å™¨ç«¯å£æ­£åœ¨ç›‘å¬è¿æ¥......");
 
 	return true;	
 }
@@ -261,14 +261,14 @@ bool  Listen(HWND hwnd)
 
 void CloseMessage(HWND hwnd,SOCKET socket)
 {
-	//ÕÒµ½ÓÃ»§id
+	//æ‰¾åˆ°ç”¨æˆ·id
 	map<SOCKET,int >::iterator iter;
 	iter = Map1.find(socket);
 
-	//Èç¹ûÎªµÇÂ¼ÓÃ»§ÔòÇå³ı¸ÃÓÃ»§ÔÚmapÖĞµÄĞÅÏ¢
+	//å¦‚æœä¸ºç™»å½•ç”¨æˆ·åˆ™æ¸…é™¤è¯¥ç”¨æˆ·åœ¨mapä¸­çš„ä¿¡æ¯
 	if ( iter != Map1.end() )
 	{
-		//·¢ËÍÏÂÏßÍ¨Öª
+		//å‘é€ä¸‹çº¿é€šçŸ¥
 		map <int , UserInfor>::iterator iterInfor;
 		iterInfor = Map2.find( iter->second );
 		if ( iterInfor != Map2.end() )
@@ -279,24 +279,24 @@ void CloseMessage(HWND hwnd,SOCKET socket)
 		}
 		else
 		{
-			MessageBox(hwnd,"ÓÃ»§ÏÂÏßµ«²éÕÒÊ§°Ü!","",0);
+			MessageBox(hwnd,"ç”¨æˆ·ä¸‹çº¿ä½†æŸ¥æ‰¾å¤±è´¥!","",0);
 		}
-		//½«ÓÃ»§ÏÂÏßĞÅÏ¢Ğ´ÈëÈÕÖ¾ÎÄ¼ş
+		//å°†ç”¨æˆ·ä¸‹çº¿ä¿¡æ¯å†™å…¥æ—¥å¿—æ–‡ä»¶
 		char buff[255];
-		sprintf(buff,"ÓÃ»§%04dÏÂÏß",iter->second);
+		sprintf(buff,"ç”¨æˆ·%04dä¸‹çº¿",iter->second);
 		SetServerLog(hwnd,IDC_EDIT1,buff);
-		//É¾³ıÓÃ»§ÔÚmapÖĞµÄĞÅÏ¢
+		//åˆ é™¤ç”¨æˆ·åœ¨mapä¸­çš„ä¿¡æ¯
 		Map2.erase( iter->second);
 		Map1.erase( iter->first);
 		UserCount--;
 	}
 
-	//¶Ï¿ªÁ¬½Ó
+	//æ–­å¼€è¿æ¥
 	closesocket(socket);
 }
 
 
-//Í¨ÖªºÃÓÑÉÏÏß
+//é€šçŸ¥å¥½å‹ä¸Šçº¿
 void TellFriendOffLine(SOCKET socket, char* UserStr )
 {
 	MsgInfor AskFriend;
@@ -313,17 +313,17 @@ void TellFriendOffLine(SOCKET socket, char* UserStr )
 
 		if( send(iter->first,(char*)&AskFriend,sizeof(AskFriend),0) == SOCKET_ERROR )
 		{ 
-			MessageBox(NULL,"·¢ËÍºÃÓÑÁĞ±íÊ§°Ü","",0);
-			//·¢ËÍÊ§°Ü
-			//SetDlgItemText(hwnd,IDC_LOGSTA,"·¢ËÍÊı¾İÊ§°Ü!");
+			MessageBox(NULL,"å‘é€å¥½å‹åˆ—è¡¨å¤±è´¥","",0);
+			//å‘é€å¤±è´¥
+			//SetDlgItemText(hwnd,IDC_LOGSTA,"å‘é€æ•°æ®å¤±è´¥!");
 			//return ; 
 		}
 	}
 }
 
-//¸üĞÂcacheĞÅÏ¢
+//æ›´æ–°cacheä¿¡æ¯
 /*
-//cacheÓÃ»§ĞÅÏ¢
+//cacheç”¨æˆ·ä¿¡æ¯
 struct Cache
 {
 	int UId;
@@ -333,7 +333,7 @@ struct Cache
 };
 map <int ,Cache>LocalCache;
 */
-//³õÊ¼»¯cache
+//åˆå§‹åŒ–cache
 void SetCache( map <int ,Cache> &Local_Cache,int n )
 {
 	Local_Cache.clear();
@@ -374,7 +374,6 @@ void SetCache( map <int ,Cache> &Local_Cache,int n )
 	//delete [] results;
 	//results = NULL;
 }
-
 
 
 
