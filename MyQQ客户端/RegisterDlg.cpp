@@ -5,7 +5,7 @@
 #include "RegisterDlg.h"
 #include "AllstructinThis.h"
 /*
-//»ú¹¹Ìå
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 struct MsgInfor
 {
 	int MsgType;
@@ -33,7 +33,7 @@ BOOL WINAPI RegisterDlg_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         HANDLE_MSG(hWnd, WM_INITDIALOG, RegisterDlg_OnInitDialog);
         HANDLE_MSG(hWnd, WM_COMMAND, RegisterDlg_OnCommand);
-		HANDLE_MSG(hWnd,WM_CLOSE, RegisterDlg_OnClose);
+	HANDLE_MSG(hWnd,WM_CLOSE, RegisterDlg_OnClose);
     }
 
     return FALSE;
@@ -55,9 +55,9 @@ void RegisterDlg_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 {
     switch(id)
     {
-        case IDOK://×¢²á°´Å¥
+        case IDOK://×¢ï¿½á°´Å¥
 		{
-			//¼ìÑé×¢²áÐÅÏ¢ÊÇ·ñºÏ¸ñ
+			//ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ç·ï¿½Ï¸ï¿½
 			if ( !CheckUpInfor(hwnd) )
 			{
 				return;
@@ -65,7 +65,7 @@ void RegisterDlg_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 			CreateThread(NULL,0,Register,hwnd,0,NULL);
 		}
         break;
-		case IDC_BT_CHEEKUP://¼ìÑéÓÃ»§ÃûÊÇ·ñºÏ¸ñ
+		case IDC_BT_CHEEKUP://ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Ï¸ï¿½
 			{
 				CheckUpUserId(hwnd);
 			}
@@ -81,37 +81,37 @@ void RegisterDlg_OnClose(HWND hwnd)
 }
 
 
-//×¢²á
+//×¢ï¿½ï¿½
 bool LinkServer(HWND hwnd,char* IpAddress)
 {
 	
-	//×ª»»ip
+	//×ªï¿½ï¿½ip
 	unsigned long ip;
 	int  i_Port = 8000;
 	if( (ip = inet_addr(IpAddress)) == INADDR_NONE )
 	{ 
 		//char Error[255];
-		//sprintf(Error,"²»ºÏ·¨µÄIPµØÖ·"); 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"·þÎñÆ÷ipµØÖ·´íÎó");
+		//sprintf(Error,"ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½IPï¿½ï¿½Ö·"); 
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ipï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½");
 		return false; 
 	} 
-	//³õÊ¼»¯serverÐÅÏ¢
+	//ï¿½ï¿½Ê¼ï¿½ï¿½serverï¿½ï¿½Ï¢
 	struct sockaddr_in serverAddress; 
 	serverAddress.sin_family=AF_INET; 
 	serverAddress.sin_addr.S_un.S_addr = ip; 
 	serverAddress.sin_port = htons(i_Port);
 	
-	//´´½¨Ì×½Ó×Ö 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½×½ï¿½ï¿½ï¿½ 
 	if( (Socket=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP)) == INVALID_SOCKET )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"´´½¨Ì×½Ó×ÖÊ§°Ü£¡");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½ï¿½ï¿½ï¿½×½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½");
 		return false; 
 	} 
 
-	//Á¬½Ó·þÎñÆ÷µÇÂ¼
+	//ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼
 	if( connect(Socket,(sockaddr*)&serverAddress,sizeof(serverAddress)) == SOCKET_ERROR )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"½¨Á¢Á¬½ÓÊ§°Ü£¡");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½");
 		return false; 
 	}
 
@@ -120,18 +120,18 @@ bool LinkServer(HWND hwnd,char* IpAddress)
 }
 
 
-//½øÐÐ×¢²á
+//ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½
 DWORD WINAPI Register(LPVOID lpParam)
 {
 	HWND hwnd = (HWND)lpParam;
 
-	//ÅÐ¶ÏÓë·þÎñÆ÷Á¬½ÓÊÇ·ñ³É¹¦
+	//ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½É¹ï¿½
 	if ( !CanConnect )
 	{
 		return 0;
 	}
 
-	//ÅÐ¶ÏÓÃ»§Ãû¿É²»¿ÉÓÃ
+	//ï¿½Ð¶ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½É²ï¿½ï¿½ï¿½ï¿½ï¿½
 	if ( !IdCanUse )
 	{
 		CheckUpUserId(hwnd);
@@ -144,7 +144,7 @@ DWORD WINAPI Register(LPVOID lpParam)
 
 	
 	
-	SetDlgItemText(hwnd,IDC_STATIC_ERROR,"Á¬½Ó·þÎñÆ÷³É¹¦ÕýÔÚ×¢²á..");
+	SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½..");
 
 	MsgInfor msg;
 
@@ -155,34 +155,34 @@ DWORD WINAPI Register(LPVOID lpParam)
 
 	msg.MsgType = 0;
 	strcpy(msg.Msg,Url_SendStr);
-	//·¢ËÍµÇÂ¼ÐÅÏ¢
+	//ï¿½ï¿½ï¿½Íµï¿½Â¼ï¿½ï¿½Ï¢
 	if( send(Socket,(char*)&msg,sizeof(msg),0) == SOCKET_ERROR )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"·¢ËÍÊý¾ÝÊ§°Ü!");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½!");
 		return 0; 
 	}
 	
 
-	//½ÓÊÕµÇÂ¼ÐÅÏ¢
+	//ï¿½ï¿½ï¿½Õµï¿½Â¼ï¿½ï¿½Ï¢
 	memset(&msg,0,sizeof(msg));	
 	if( recv(Socket,(char*)&msg,sizeof(msg),0) == SOCKET_ERROR )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"½ÓÊÕÊý¾ÝÊ§°Ü!");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½!");
 		return 0; 
 	}
 	
 	switch( msg.MsgType )
 	{
 		
-	case 0://×¢²áÊ§°Ü
+	case 0://×¢ï¿½ï¿½Ê§ï¿½ï¿½
 		{
-			SetDlgItemText(hwnd,IDC_STATIC_ERROR,"×¢²áÊ§°Ü,¿ÉÄÜÊÇµ±Ç°×¢²áµÄÓÃ»§Ì«¶à!");
+			SetDlgItemText(hwnd,IDC_STATIC_ERROR,"×¢ï¿½ï¿½Ê§ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½Ç°×¢ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ì«ï¿½ï¿½!");
 		}
 		break;
-	case 1://×¢²á³É¹¦
+	case 1://×¢ï¿½ï¿½É¹ï¿½
 		{
-			MessageBox(hwnd, "×¢²á³É¹¦!","×¢²á³É¹¦",0);
-			SetDlgItemText(hwnd,IDC_STATIC_ERROR,"×¢²á³É¹¦!");
+			MessageBox(hwnd, "×¢ï¿½ï¿½É¹ï¿½!","×¢ï¿½ï¿½É¹ï¿½",0);
+			SetDlgItemText(hwnd,IDC_STATIC_ERROR,"×¢ï¿½ï¿½É¹ï¿½!");
 			EndDialog(hwnd, 0);
 		}
 		break;	
@@ -191,20 +191,20 @@ DWORD WINAPI Register(LPVOID lpParam)
 }
 
 
-//ÑéÖ¤ÓÃ»§ÃûÊÇ·ñ¿ÉÓÃ
+//ï¿½ï¿½Ö¤ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
 DWORD  CheckUpUserId(HWND hwnd)
 {
 //	HWND hwnd = (HWND)lpParam;
 	if ( !CanConnect )
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ÎÞ·¨ÑéÖ¤IDÊÇ·ñ¿ÉÓÃ");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½Þ·ï¿½ï¿½ï¿½Ö¤IDï¿½Ç·ï¿½ï¿½ï¿½ï¿½");
 		return 0;
 	}
 
 	GetDlgItemText(hwnd,IDC_EDIT_ID,Myinfor.Id,sizeof(Myinfor.Id));
 	if ( !strcmp(Myinfor.Id,"") )
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ÓÃ»§Ãû²»ÄÜÎª¿Õ");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½");
 		return 0;
 	}
 
@@ -217,30 +217,30 @@ DWORD  CheckUpUserId(HWND hwnd)
 
 	msg.MsgType = 2;
 	strcpy(msg.Msg,Url_SendStr);
-	//·¢ËÍµÇÂ¼ÐÅÏ¢
+	//ï¿½ï¿½ï¿½Íµï¿½Â¼ï¿½ï¿½Ï¢
 	if( send(Socket,(char*)&msg,sizeof(msg),0) == SOCKET_ERROR )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"·¢ËÍÊý¾ÝÊ§°Ü!");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½!");
 		return 0; 
 	}
 	
 
-	//½ÓÊÕµÇÂ¼ÐÅÏ¢
+	//ï¿½ï¿½ï¿½Õµï¿½Â¼ï¿½ï¿½Ï¢
 	memset(&msg,0,sizeof(msg));	
 	if( recv(Socket,(char*)&msg,sizeof(msg),0) == SOCKET_ERROR )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"½ÓÊÕÊý¾ÝÊ§°Ü!");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½!");
 		return 0; 
 	}
 
 	if ( msg.MsgType == 0 )
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ID²»¿ÉÓÃ");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		IdCanUse = false;
 	}
 	else
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ID¿ÉÓÃ");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"IDï¿½ï¿½ï¿½ï¿½");
 		IdCanUse = true;
 	}
 	return 0;
@@ -249,42 +249,42 @@ DWORD  CheckUpUserId(HWND hwnd)
 
 
 
-//ºË²éÐÅÏ¢ÓÐÎÞ´íÎó
+//ï¿½Ë²ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Þ´ï¿½ï¿½ï¿½
 bool CheckUpInfor(HWND hwnd)
 {
-	//ÓÃ»§Ãû
+	//ï¿½Ã»ï¿½ï¿½ï¿½
 	//char Id[255];
 	GetDlgItemText(hwnd,IDC_EDIT_ID,Myinfor.Id,sizeof(Myinfor.Id));
 	if ( !strcmp(Myinfor.Id,"") )
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ÓÃ»§ID²»ÄÜÎª¿Õ");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½Ã»ï¿½IDï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½");
 		return false;
 	}
 	GetDlgItemText(hwnd,IDC_EDIT_NAME,Myinfor.Name,sizeof(Myinfor.Name));
 	if ( !strcmp(Myinfor.Name,"") )
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ÓÃ»§Ãû²»ÄÜÎª¿Õ");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½");
 		return false;
 	}
-	//ÃÜÂë
+	//ï¿½ï¿½ï¿½ï¿½
 	char Passwd2[255];
 	GetDlgItemText(hwnd,IDC_EDIT_PASSWD1,Myinfor.Passwd,sizeof(Myinfor.Passwd));
 	GetDlgItemText(hwnd,IDC_EDIT_PASSWD2,Passwd2,sizeof(Passwd2));
 	if ( strcmp(Myinfor.Passwd,Passwd2) )
 	{
-		//ÌáÊ¾ÃÜÂë²»ºÏ¸ñ
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"Á½´ÎÃÜÂë²»ÏàÍ¬!");
+		//ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ë²»ï¿½Ï¸ï¿½
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½Í¬!");
 		return false;	
 	}
 
 	if ( !strcmp(Myinfor.Passwd,"") )
 	{
-		//ÌáÊ¾ÃÜÂë²»ºÏ¸ñ
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ÓÐÃÜÂëÎª¿Õ!");
+		//ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ë²»ï¿½Ï¸ï¿½
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½!");
 		return false;
 	}
 
-	SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ÐÅÏ¢ºÏ¸ñ");
-	//ÃÜÂëºÏ¸ñ
+	SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ï¿½ï¿½Ï¢ï¿½Ï¸ï¿½");
+	//ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
 	return true;
 }
