@@ -5,13 +5,12 @@
 #include "RegisterDlg.h"
 #include "AllstructinThis.h"
 /*
-//������
+//机构体
 struct MsgInfor
 {
 	int MsgType;
 	char Msg[1024*6];
 };*/
-//仲
 
 struct Infor
 {
@@ -34,7 +33,7 @@ BOOL WINAPI RegisterDlg_Proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         HANDLE_MSG(hWnd, WM_INITDIALOG, RegisterDlg_OnInitDialog);
         HANDLE_MSG(hWnd, WM_COMMAND, RegisterDlg_OnCommand);
-	HANDLE_MSG(hWnd,WM_CLOSE, RegisterDlg_OnClose);
+		HANDLE_MSG(hWnd,WM_CLOSE, RegisterDlg_OnClose);
     }
 
     return FALSE;
@@ -56,9 +55,9 @@ void RegisterDlg_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 {
     switch(id)
     {
-        case IDOK://ע�ᰴť
+        case IDOK://注册按钮
 		{
-			//����ע����Ϣ�Ƿ�ϸ�
+			//检验注册信息是否合格
 			if ( !CheckUpInfor(hwnd) )
 			{
 				return;
@@ -66,7 +65,7 @@ void RegisterDlg_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 			CreateThread(NULL,0,Register,hwnd,0,NULL);
 		}
         break;
-		case IDC_BT_CHEEKUP://�����û����Ƿ�ϸ�
+		case IDC_BT_CHEEKUP://检验用户名是否合格
 			{
 				CheckUpUserId(hwnd);
 			}
@@ -82,37 +81,37 @@ void RegisterDlg_OnClose(HWND hwnd)
 }
 
 
-//ע��
+//注册
 bool LinkServer(HWND hwnd,char* IpAddress)
 {
 	
-	//ת��ip
+	//转换ip
 	unsigned long ip;
 	int  i_Port = 8000;
 	if( (ip = inet_addr(IpAddress)) == INADDR_NONE )
 	{ 
 		//char Error[255];
-		//sprintf(Error,"���Ϸ���IP��ַ"); 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"������ip��ַ����");
+		//sprintf(Error,"不合法的IP地址"); 
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"服务器ip地址错误");
 		return false; 
 	} 
-	//��ʼ��server��Ϣ
+	//初始化server信息
 	struct sockaddr_in serverAddress; 
 	serverAddress.sin_family=AF_INET; 
 	serverAddress.sin_addr.S_un.S_addr = ip; 
 	serverAddress.sin_port = htons(i_Port);
 	
-	//�����׽��� 
+	//创建套接字 
 	if( (Socket=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP)) == INVALID_SOCKET )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"�����׽���ʧ�ܣ�");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"创建套接字失败！");
 		return false; 
 	} 
 
-	//���ӷ�������¼
+	//连接服务器登录
 	if( connect(Socket,(sockaddr*)&serverAddress,sizeof(serverAddress)) == SOCKET_ERROR )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"��������ʧ�ܣ�");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"建立连接失败！");
 		return false; 
 	}
 
@@ -121,18 +120,18 @@ bool LinkServer(HWND hwnd,char* IpAddress)
 }
 
 
-//����ע��
+//进行注册
 DWORD WINAPI Register(LPVOID lpParam)
 {
 	HWND hwnd = (HWND)lpParam;
 
-	//�ж�������������Ƿ�ɹ�
+	//判断与服务器连接是否成功
 	if ( !CanConnect )
 	{
 		return 0;
 	}
 
-	//�ж��û����ɲ�����
+	//判断用户名可不可用
 	if ( !IdCanUse )
 	{
 		CheckUpUserId(hwnd);
@@ -145,7 +144,7 @@ DWORD WINAPI Register(LPVOID lpParam)
 
 	
 	
-	SetDlgItemText(hwnd,IDC_STATIC_ERROR,"���ӷ������ɹ�����ע��..");
+	SetDlgItemText(hwnd,IDC_STATIC_ERROR,"连接服务器成功正在注册..");
 
 	MsgInfor msg;
 
@@ -156,34 +155,34 @@ DWORD WINAPI Register(LPVOID lpParam)
 
 	msg.MsgType = 0;
 	strcpy(msg.Msg,Url_SendStr);
-	//���͵�¼��Ϣ
+	//发送登录信息
 	if( send(Socket,(char*)&msg,sizeof(msg),0) == SOCKET_ERROR )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"��������ʧ��!");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"发送数据失败!");
 		return 0; 
 	}
 	
 
-	//���յ�¼��Ϣ
+	//接收登录信息
 	memset(&msg,0,sizeof(msg));	
 	if( recv(Socket,(char*)&msg,sizeof(msg),0) == SOCKET_ERROR )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"��������ʧ��!");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"接收数据失败!");
 		return 0; 
 	}
 	
 	switch( msg.MsgType )
 	{
 		
-	case 0://ע��ʧ��
+	case 0://注册失败
 		{
-			SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ע��ʧ��,�����ǵ�ǰע����û�̫��!");
+			SetDlgItemText(hwnd,IDC_STATIC_ERROR,"注册失败,可能是当前注册的用户太多!");
 		}
 		break;
-	case 1://ע��ɹ�
+	case 1://注册成功
 		{
-			MessageBox(hwnd, "ע��ɹ�!","ע��ɹ�",0);
-			SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ע��ɹ�!");
+			MessageBox(hwnd, "注册成功!","注册成功",0);
+			SetDlgItemText(hwnd,IDC_STATIC_ERROR,"注册成功!");
 			EndDialog(hwnd, 0);
 		}
 		break;	
@@ -192,20 +191,20 @@ DWORD WINAPI Register(LPVOID lpParam)
 }
 
 
-//��֤�û����Ƿ����
+//验证用户名是否可用
 DWORD  CheckUpUserId(HWND hwnd)
 {
 //	HWND hwnd = (HWND)lpParam;
 	if ( !CanConnect )
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"�޷���֤ID�Ƿ����");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"无法验证ID是否可用");
 		return 0;
 	}
 
 	GetDlgItemText(hwnd,IDC_EDIT_ID,Myinfor.Id,sizeof(Myinfor.Id));
 	if ( !strcmp(Myinfor.Id,"") )
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"�û�������Ϊ��");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"用户名不能为空");
 		return 0;
 	}
 
@@ -218,30 +217,30 @@ DWORD  CheckUpUserId(HWND hwnd)
 
 	msg.MsgType = 2;
 	strcpy(msg.Msg,Url_SendStr);
-	//���͵�¼��Ϣ
+	//发送登录信息
 	if( send(Socket,(char*)&msg,sizeof(msg),0) == SOCKET_ERROR )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"��������ʧ��!");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"发送数据失败!");
 		return 0; 
 	}
 	
 
-	//���յ�¼��Ϣ
+	//接收登录信息
 	memset(&msg,0,sizeof(msg));	
 	if( recv(Socket,(char*)&msg,sizeof(msg),0) == SOCKET_ERROR )
 	{ 
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"��������ʧ��!");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"接收数据失败!");
 		return 0; 
 	}
 
 	if ( msg.MsgType == 0 )
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ID������");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ID不可用");
 		IdCanUse = false;
 	}
 	else
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ID����");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"ID可用");
 		IdCanUse = true;
 	}
 	return 0;
@@ -250,42 +249,42 @@ DWORD  CheckUpUserId(HWND hwnd)
 
 
 
-//�˲���Ϣ���޴���
+//核查信息有无错误
 bool CheckUpInfor(HWND hwnd)
 {
-	//�û���
+	//用户名
 	//char Id[255];
 	GetDlgItemText(hwnd,IDC_EDIT_ID,Myinfor.Id,sizeof(Myinfor.Id));
 	if ( !strcmp(Myinfor.Id,"") )
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"�û�ID����Ϊ��");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"用户ID不能为空");
 		return false;
 	}
 	GetDlgItemText(hwnd,IDC_EDIT_NAME,Myinfor.Name,sizeof(Myinfor.Name));
 	if ( !strcmp(Myinfor.Name,"") )
 	{
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"�û�������Ϊ��");
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"用户名不能为空");
 		return false;
 	}
-	//����
+	//密码
 	char Passwd2[255];
 	GetDlgItemText(hwnd,IDC_EDIT_PASSWD1,Myinfor.Passwd,sizeof(Myinfor.Passwd));
 	GetDlgItemText(hwnd,IDC_EDIT_PASSWD2,Passwd2,sizeof(Passwd2));
 	if ( strcmp(Myinfor.Passwd,Passwd2) )
 	{
-		//��ʾ���벻�ϸ�
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"�������벻��ͬ!");
+		//提示密码不合格
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"两次密码不相同!");
 		return false;	
 	}
 
 	if ( !strcmp(Myinfor.Passwd,"") )
 	{
-		//��ʾ���벻�ϸ�
-		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"������Ϊ��!");
+		//提示密码不合格
+		SetDlgItemText(hwnd,IDC_STATIC_ERROR,"有密码为空!");
 		return false;
 	}
 
-	SetDlgItemText(hwnd,IDC_STATIC_ERROR,"��Ϣ�ϸ�");
-	//����ϸ�
+	SetDlgItemText(hwnd,IDC_STATIC_ERROR,"信息合格");
+	//密码合格
 	return true;
 }
