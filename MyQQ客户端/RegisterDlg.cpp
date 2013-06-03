@@ -11,6 +11,7 @@ struct MsgInfor
 	int MsgType;
 	char Msg[1024*6];
 };*/
+//仲
 
 struct Infor
 {
