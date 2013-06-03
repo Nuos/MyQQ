@@ -18,6 +18,7 @@ using namespace std;
 //本文件内的全局变量
 
 MySql mysql("root","root","myqq","MySQL ODBC 5.1 Driver","127.0.0.1");  //数据库类
+//MySql mysql("root","1234","myqq","MySQL ODBC 5.2w Driver","127.0.0.1");  //数据库类
 SOCKET serverSocket;             //服务端套接字
 map <SOCKET,int >Map1;           //map1 保存socket与uid
 map <int , UserInfor>Map2;       //map2 保存uid与用户信息
